@@ -3,13 +3,25 @@ using namespace std;
 
 int findMaxLength(vector<int> &num)
 {
-
-    for (int i = 0; i < num.size(); i++)
+    int n = num.size();
+    unordered_map<int, int> f;
+    int maxLen = 0;
+    f[0] = -1;
+    int ps = 0;
+    for (int i = 0; i < n; i++)
     {
-        num[i + 1] = num[i + 1] + num[i];
+        ps += (num[i] == 0) ? -1 : +1;
+        if (f.count(ps))
+        {
+            maxLen = max(maxLen, i + 1 - f[ps]);
+        }
+        else
+        {
+            f[ps] = i;
+        }
     }
 
-    return (num[num.size() - 1] - num[0]) + 1;
+    return maxLen;
 }
 int main()
 {
