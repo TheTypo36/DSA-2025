@@ -26,6 +26,28 @@ int subarraySum(vector<int> &nums, int k)
 
     return count;
 }
+
+
+int subarraySum_optimized(vector<int> &nums, int k){
+
+          unordered_map<int,int> previousSum;
+        previousSum[0] = 1;  // base case
+
+        int currSum = 0, count = 0;
+        for(int num : nums) {
+            currSum += num;
+            
+            // add how many times (currSum - k) appeared
+            count += previousSum[currSum - k];
+            
+            // record current prefix sum
+            previousSum[currSum]++;
+        }
+
+        return count;
+}
+
+
 int main()
 {
     int n;
